@@ -1,87 +1,49 @@
+data "aws_caller_identity" "current" {}
+
+data "aws_eks_cluster" "eks" {
+    name = var.cluster_name
+}
+
+data "aws_eks_cluster_auth" "eks" {
+    name = var.cluster_name
+}
+
+provider "kubernetes" {
+  host                   = var.cluster_endpoint
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
+  token                  = data.aws_eks_cluster_auth.eks.token
+}
+
+provider "helm" {
+  kubernetes {
+    host                   = var.cluster_endpoint
+    cluster_ca_certificate = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
+    token                  = data.aws_eks_cluster_auth.eks.token
+  }
+}
+
 # Add EKS Blueprints Add-ons
-module "eks_blueprints_kubernetes_addons" {
-  source = "github.com/aws-ia/terraform-aws-eks-blueprints//modules/kubernetes-addons?ref=v4.32.1"
-  
+module "eks_blueprints_addons" {
+    source  = "aws-ia/eks-blueprints-addons/aws"
+    version = "1.16.3"
+    
+  cluster_name      = var.cluster_name
+  cluster_version   = var.cluster_version
+  cluster_endpoint  = var.cluster_endpoint
+  oidc_provider_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${replace(data.aws_eks_cluster.eks.identity[0].oidc[0].issuer, "https://", "")}" 
+
   # Enable ArgoCD
-  enable_argocd = var.enable_argocd
-  argocd_helm_config = var.enable_argocd ? {
-    version = var.argocd_helm_chart_version
-    values = [
-      <<-EOT
-      server:
-        service:
-          type: ClusterIP
-        extraArgs:
-          - --insecure
-      controller:
-        metrics:
-          enabled: true
-      server:
-        metrics:
-          enabled: true
-      EOT
-    ]
-  } : null
+  enable_argocd = true
 
   # Enable NGINX Ingress Controller
-  enable_ingress_nginx = var.enable_ingress_nginx
-  ingress_nginx_helm_config = var.enable_ingress_nginx ? {
-    version = var.nginx_ingress_helm_chart_version
-    values = [
-      <<-EOT
-      controller:
-        service:
-          type: LoadBalancer
-        metrics:
-          enabled: true
-        autoscaling:
-          enabled: true
-          minReplicas: 2
-          maxReplicas: 5
-      EOT
-    ]
-  } : null
+  enable_ingress_nginx = true
 
   # Enable External DNS
-  enable_external_dns = var.enable_external_dns
-  external_dns_helm_config = var.enable_external_dns ? {
-    version = var.external_dns_helm_chart_version
-    values = [
-      <<-EOT
-      provider: aws
-      policy: sync
-      metrics:
-        enabled: true
-      EOT
-    ]
-  } : null
+  enable_external_dns = true
 
   # Enable External Secrets
-  enable_external_secrets = var.enable_external_secrets
-  external_secrets_helm_config = var.enable_external_secrets ? {
-    version = var.external_secrets_helm_chart_version
-    values = [
-      <<-EOT
-      serviceAccount:
-        create: true
-      metrics:
-        enabled: true
-      EOT
-    ]
-  } : null
+  enable_external_secrets = true
 
   # Enable Cert Manager
-  enable_cert_manager = var.enable_cert_manager
-  cert_manager_helm_config = var.enable_cert_manager ? {
-    version = var.cert_manager_helm_chart_version
-    values = [
-      <<-EOT
-      installCRDs: true
-      serviceAccount:
-        create: true
-      metrics:
-        enabled: true
-      EOT
-    ]
-  } : null
+  enable_cert_manager = true
 }

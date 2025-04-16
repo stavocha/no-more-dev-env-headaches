@@ -4,11 +4,13 @@ module "vpc" {
 
   name = var.vpc_name
   cidr = var.vpc_cidr
-  azs  = var.azs
 
   enable_nat_gateway   = var.enable_nat_gateway
   single_nat_gateway   = var.single_nat_gateway
   enable_dns_hostnames = var.enable_dns_hostnames
+  azs                  = var.azs
+  private_subnets      = var.private_subnets
+  public_subnets       = var.public_subnets
 
   # EKS requires specific tags on subnets for load balancer provisioning
   public_subnet_tags = {

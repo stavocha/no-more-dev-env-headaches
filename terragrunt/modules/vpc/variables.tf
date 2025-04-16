@@ -13,25 +13,26 @@ variable "vpc_cidr" {
   type        = string
 }
 
-variable "azs" {
-  description = "List of availability zones"
-  type        = list(string)
-}
-
-variable "private_subnets" {
-  description = "List of private subnet CIDR blocks"
-  type        = list(string)
-}
-
-variable "public_subnets" {
-  description = "List of public subnet CIDR blocks"
-  type        = list(string)
-}
-
 variable "enable_nat_gateway" {
   description = "Whether to enable NAT Gateway"
   type        = bool
   default     = true
+}
+
+variable "private_subnets" {
+  description = "Private subnets for VPC"
+  type        = list(string)
+}
+
+variable "public_subnets" {
+  description = "Public subnets for VPC"  
+  type        = list(string)
+}
+
+variable "azs" {
+  description = "Availability zones for VPC"
+  type        = list(string)
+  default     = ["us-east-1a", "us-east-1b", "us-east-1c"]
 }
 
 variable "single_nat_gateway" {

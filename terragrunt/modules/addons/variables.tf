@@ -1,3 +1,18 @@
+variable "cluster_name" {
+  description = "Name of the EKS cluster"
+  type        = string
+}
+
+variable "cluster_version" {
+  description = "Kubernetes version of the EKS cluster"
+  type        = string
+}
+
+variable "cluster_endpoint" {
+  type          = string
+  description   = "The host of the EKS cluster"
+}
+
 # ArgoCD Configuration
 variable "enable_argocd" {
   description = "Enable ArgoCD add-on"
