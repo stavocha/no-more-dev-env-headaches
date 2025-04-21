@@ -72,7 +72,7 @@ variable "chart_revision" {
 variable "chart_path" {
   description = "Path to the Helm chart within the repository"
   type        = string
-  default     = "charts/argocd"
+  default     = "argocd/apps"
 }
 
 variable "chart_value_files" {

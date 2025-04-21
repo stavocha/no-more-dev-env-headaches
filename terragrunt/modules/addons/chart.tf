@@ -67,18 +67,10 @@ resource "kubectl_manifest" "argocd_app_of_apps" {
         namespace: ${var.argocd_namespace}
       spec:
         project: default
-        sources:
-          - repoURL: ${var.chart_repo_url}
-            targetRevision: ${var.chart_revision}
-            path: ${var.chart_path}
-            helm:
-              valueFiles:
-%{for value_file in var.chart_value_files ~}
-                - $repo_root/${value_file}
-%{endfor ~}
-          - repoURL: ${var.chart_repo_url}
-            targetRevision: ${var.chart_revision}
-            ref: repo_root
+        source:
+          repoURL: ${var.chart_repo_url}
+          targetRevision: ${var.chart_revision}
+          path: ${var.chart_path}
         destination:
           server: https://kubernetes.default.svc
           namespace: ${var.argocd_namespace}
