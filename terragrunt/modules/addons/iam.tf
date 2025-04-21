@@ -1,6 +1,6 @@
-data "aws_caller_identity" "current" {}
+data "aws_caller_identity" "current-iam" {}
 
-data "aws_eks_cluster" "eks" {
+data "aws_eks_cluster" "eks-iam" {
   name = var.cluster_name
 }
 
@@ -12,12 +12,12 @@ resource "aws_iam_role" "crossplane_aws_role" {
       {
         Effect = "Allow"
         Principal = {
-          Federated = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${replace(data.aws_eks_cluster.eks.identity[0].oidc[0].issuer, "https://", "")}"
+          Federated = "arn:aws:iam::${data.aws_caller_identity.current-iam.account_id}:oidc-provider/${replace(data.aws_eks_cluster.eks-iam.identity[0].oidc[0].issuer, "https://", "")}"
         }
         Action = "sts:AssumeRoleWithWebIdentity"
         Condition = {
           StringEquals = {
-            "${replace(data.aws_eks_cluster.eks.identity[0].oidc[0].issuer, "https://", "")}:sub" = "system:serviceaccount:crossplane-system:provider-aws"
+            "${replace(data.aws_eks_cluster.eks-iam.identity[0].oidc[0].issuer, "https://", "")}:sub" = "system:serviceaccount:crossplane-system:provider-aws"
           }
         }
       }

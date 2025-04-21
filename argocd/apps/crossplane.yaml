@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: ${var.chart_repo_url}
-    targetRevision: ${var.chart_revision}
-    path: argocd/charts/crossplane
+    repoURL: .
+    targetRevision: HEAD
+    path: ../../charts/crossplane
     helm:
       parameters:
         - name: aws.roleArn
