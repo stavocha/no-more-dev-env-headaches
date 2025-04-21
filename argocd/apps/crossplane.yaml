@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: crossplane
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://charts.crossplane.io/stable
+    targetRevision: 1.15.1
+    chart: crossplane
+    helm:
+      values: |
+        args:
+          - --enable-composition-functions
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1Gi
+          requests:
+            cpu: 100m
+            memory: 256Mi
+        securityContext:
+          runAsUser: 2000
+          runAsGroup: 2000
+        provider:
+          packages:
+            - crossplane/provider-aws:v0.45.0
+            - crossplane/provider-helm:v0.18.0
+            - crossplane/provider-kubernetes:v0.9.0
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: crossplane-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

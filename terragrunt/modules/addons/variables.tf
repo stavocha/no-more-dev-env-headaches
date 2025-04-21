@@ -48,3 +48,35 @@ variable "enable_cert_manager" {
   type        = bool
   default     = true
 }
+
+# ArgoCD Namespace Configuration
+variable "argocd_namespace" {
+  description = "Namespace where ArgoCD is installed"
+  type        = string
+  default     = "argocd"
+}
+
+# Chart Repository Configuration
+variable "chart_repo_url" {
+  description = "URL of the Git repository containing the Helm charts"
+  type        = string
+  default     = "https://github.com/stavocha/no-more-dev-env-headaches.git"
+}
+
+variable "chart_revision" {
+  description = "Git revision (branch/tag/commit) to use for the chart repository"
+  type        = string
+  default     = "main"
+}
+
+variable "chart_path" {
+  description = "Path to the Helm chart within the repository"
+  type        = string
+  default     = "charts/argocd"
+}
+
+variable "chart_value_files" {
+  description = "List of value files to use with the Helm chart"
+  type        = list(string)
+  default     = ["values.yaml"]
+}
