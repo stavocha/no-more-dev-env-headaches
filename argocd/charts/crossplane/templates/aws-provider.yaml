@@ -6,7 +6,7 @@ spec:
   serviceAccountTemplate:
     metadata:
       annotations:
-        eks.amazonaws.com/role-arn: arn:aws:iam::622346257358:role/my-custom-role
+        eks.amazonaws.com/role-arn: {{ .Values.aws.roleArn }}
 ---
 apiVersion: pkg.crossplane.io/v1
 kind: Provider

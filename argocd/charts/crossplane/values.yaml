@@ -25,3 +25,4 @@ crossplane:
 
 aws:
   region: us-east-1 
+  roleArn: arn:aws:iam::622346257358:role/my-custom-role
