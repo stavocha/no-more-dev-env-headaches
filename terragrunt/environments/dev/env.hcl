@@ -15,7 +15,7 @@ locals {
   
   # Node Group Configuration
   node_group_name      = "dev1-node-group"
-  node_instance_types  = ["t2.micro"]
+  node_instance_types  = ["t3a.large", "t3a.xlarge", "m5.large"]
   node_min_size        = 1
   node_max_size        = 1
   node_desired_size    = 1

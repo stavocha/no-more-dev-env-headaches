@@ -39,11 +39,11 @@ module "eks_blueprints_addons" {
   enable_ingress_nginx = true
 
   # Enable External DNS
-  enable_external_dns = true
+  enable_external_dns = false
 
   # Enable External Secrets
   enable_external_secrets = true
 
   # Enable Cert Manager
-  enable_cert_manager = true
+  enable_cert_manager = false
 }
