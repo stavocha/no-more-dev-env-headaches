@@ -1,24 +1,27 @@
+apiVersion: pkg.crossplane.io/v1beta1
+kind: DeploymentRuntimeConfig
+metadata:
+  name: irsa-runtimeconfig
+spec:
+  serviceAccountTemplate:
+    metadata:
+      annotations:
+        eks.amazonaws.com/role-arn: arn:aws:iam::622346257358:role/my-custom-role
+---
 apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
-  name: provider-aws
+  name: provider-aws-s3
 spec:
-  package: crossplane/provider-aws:v0.45.0
-  controllerConfigRef:
-    name: aws-config
+  package: xpkg.upbound.io/upbound/provider-aws-s3:v0.37.0
+  runtimeConfigRef:
+    name: irsa-runtimeconfig
 ---
-apiVersion: pkg.crossplane.io/v1alpha1
-kind: ControllerConfig
-metadata:
-  name: aws-config
-spec:
-  serviceAccountName: provider-aws
----
-apiVersion: aws.crossplane.io/v1beta1
+apiVersion: aws.upbound.io/v1beta1
 kind: ProviderConfig
 metadata:
-  name: default
+  name: irsa-providerconfig
 spec:
   credentials:
-    source: InjectedIdentity
-  region: {{ .Values.aws.region }} 
+    source: IRSA
+
