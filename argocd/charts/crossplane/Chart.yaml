@@ -5,5 +5,5 @@ type: application
 version: 0.1.0
 dependencies:
   - name: crossplane
-    version: 1.15.1
+    version: 1.19
     repository: https://charts.crossplane.io/stable
