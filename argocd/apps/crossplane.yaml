@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: .
+    repoURL: https://github.com/stavocha/no-more-dev-env-headaches.git
     targetRevision: HEAD
-    path: ../../charts/crossplane
+    path: argocd/charts/crossplane
     helm:
       parameters:
         - name: aws.roleArn
