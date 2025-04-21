@@ -9,10 +9,6 @@ spec:
     repoURL: https://github.com/stavocha/no-more-dev-env-headaches.git
     targetRevision: HEAD
     path: argocd/charts/crossplane
-    helm:
-      parameters:
-        - name: aws.roleArn
-          value: ${aws_iam_role.crossplane_aws_role.arn}
   destination:
     server: https://kubernetes.default.svc
     namespace: crossplane-system
