@@ -1,0 +1,16 @@
+apiVersion: s3.aws.crossplane.io/v1beta1
+kind: Bucket
+metadata:
+  name: {{ .Release.Name }}-no-more-dev-env-headaches
+spec:
+  forProvider:
+    region: {{ .Values.aws.region }}
+    acl: private
+    locationConstraint: {{ .Values.aws.region }}
+    versioning: true
+    serverSideEncryptionConfiguration:
+      rules:
+        - applyServerSideEncryptionByDefault:
+            sseAlgorithm: AES256
+  providerConfigRef:
+    name: irsa-providerconfig
