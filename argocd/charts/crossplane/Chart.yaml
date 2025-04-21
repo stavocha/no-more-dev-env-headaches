@@ -3,9 +3,7 @@ name: crossplane
 description: A Helm chart for Crossplane with AWS provider and configurations
 type: application
 version: 0.1.0
-appVersion: "1.15.1"
 dependencies:
   - name: crossplane
-    version: 1.15.1
+    version: 1.20.0-rc.0.45.gb0cc38c10
     repository: https://charts.crossplane.io/stable
-    condition: crossplane.enabled 
