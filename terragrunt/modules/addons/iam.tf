@@ -17,7 +17,7 @@ resource "aws_iam_role" "crossplane_aws_role" {
         Action = "sts:AssumeRoleWithWebIdentity"
         Condition = {
           StringEquals = {
-            "${replace(data.aws_eks_cluster.eks-iam.identity[0].oidc[0].issuer, "https://", "")}:sub" = "system:serviceaccount:crossplane-system:provider-aws"
+            "${replace(data.aws_eks_cluster.eks-iam.identity[0].oidc[0].issuer, "https://", "")}:sub" = "system:serviceaccount:crossplane-system:provider-aws-*"
           }
         }
       }
@@ -33,4 +33,9 @@ resource "aws_iam_role_policy_attachment" "crossplane_sqs_policy" {
 resource "aws_iam_role_policy_attachment" "crossplane_iam_policy" {
   role       = aws_iam_role.crossplane_aws_role.name
   policy_arn = "arn:aws:iam::aws:policy/IAMFullAccess"
-} 
+}
+
+resource "aws_iam_role_policy_attachment" "crossplane_s3_policy" {
+  role       = aws_iam_role.crossplane_aws_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+}
