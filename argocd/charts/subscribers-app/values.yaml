@@ -6,7 +6,8 @@ image:
   pullPolicy: IfNotPresent
 
 serviceAccount:
-  create: true
+  name: subscribers-app
+
 
 env:
   AWS_REGION: us-east-1
