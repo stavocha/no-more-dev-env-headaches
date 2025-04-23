@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/stavocha/no-more-dev-env-headaches.git
     targetRevision: HEAD
-    path: argocd/crossplane-configurations/provider-config.yaml
+    path: argocd/charts/crossplane-provider-config
   destination:
     server: https://kubernetes.default.svc
     namespace: crossplane-system
