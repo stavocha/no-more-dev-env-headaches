@@ -1,0 +1,43 @@
+apiVersion: sqs.aws.upbound.io/v1beta1
+kind: Queue
+metadata:
+  name: user-registration-queue
+  annotations:
+    crossplane.io/external-name: user-registration-queue
+spec:
+  forProvider:
+    region: us-east-1
+    delaySeconds: 0
+    maxMessageSize: 262144
+    messageRetentionSeconds: 345600
+    receiveWaitTimeSeconds: 0
+    visibilityTimeoutSeconds: 30
+  providerConfigRef:
+    name: irsa-providerconfig
+---
+apiVersion: sns.aws.upbound.io/v1beta1
+kind: Topic
+metadata:
+  name: user-registration-topic
+  annotations:
+    crossplane.io/external-name: user-registration-topic
+spec:
+  forProvider:
+    region: us-east-1
+  providerConfigRef:
+    name: irsa-providerconfig
+---
+apiVersion: sns.aws.upbound.io/v1beta1
+kind: TopicSubscription
+metadata:
+  name: queue-subscription
+spec:
+  forProvider:
+    region: us-east-1
+    protocol: sqs
+    endpointRef:
+      name: user-registration-queue
+    topicArnRef:
+      name: user-registration-topic
+  providerConfigRef:
+    name: irsa-providerconfig
