@@ -24,16 +24,16 @@ spec:
   runtimeConfigRef:
     name: irsa-runtimeconfig
 ---
-# apiVersion: aws.upbound.io/v1beta1
-# kind: ProviderConfig
-# metadata:
-#   name: irsa-providerconfig
-#   annotations:
-#     argocd.argoproj.io/sync-wave: "-3"
-#     argocd.argoproj.io/hook: PostSync
-# spec:
-#   credentials:
-#     source: IRSA
-#   assumeRole:
-#     roleARN: {{ .Values.aws.roleArn }}
+apiVersion: aws.upbound.io/v1beta1
+kind: ProviderConfig
+metadata:
+  name: irsa-providerconfig
+  annotations:
+    argocd.argoproj.io/sync-wave: "-3"
+    argocd.argoproj.io/hook: PostSync
+spec:
+  credentials:
+    source: IRSA
+  assumeRole:
+    roleARN: {{ .Values.aws.roleArn }}
 
