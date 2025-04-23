@@ -15,6 +15,13 @@ module "eks" {
 
   cluster_enabled_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
 
+  cluster_addons = {
+      coredns                 = {}
+      eks-pod-identity-agent  = {}
+      kube-proxy              = {}
+      vpc-cni                 = {}
+  }
+
   eks_managed_node_groups = {
     default = {
       name           = var.node_group_name
