@@ -22,7 +22,9 @@ crossplane:
     name: provider-aws
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::622346257358:role/my-custom-role
-
+  provider:
+    packages:
+      - xpkg.upbound.io/upbound/provider-aws-s3:v0.37.0
 aws:
   region: us-east-1 
   roleArn: arn:aws:iam::622346257358:role/my-custom-role
