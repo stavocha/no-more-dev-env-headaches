@@ -33,4 +33,12 @@ spec:
   package: xpkg.upbound.io/upbound/provider-aws-sns:v1.0.0
   runtimeConfigRef:
     name: irsa-runtimeconfig
-    
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-aws-sns
+spec:
+  package: xpkg.upbound.io/upbound/provider-aws-eks:v1.0.0
+  runtimeConfigRef:
+    name: irsa-runtimeconfig
