@@ -47,7 +47,10 @@ spec:
               "sqs:SendMessage",
               "sqs:ReceiveMessage",
               "sqs:DeleteMessage",
-              "sqs:GetQueueAttributes"
+              "sqs:GetQueueAttributes",
+              "sqs:GetQueueUrl",
+              "sqs:ListQueues",
+              "sqs:ChangeMessageVisibility"
             ],
             "Resource": "*"
           },
@@ -56,7 +59,10 @@ spec:
             "Action": [
               "sns:Publish",
               "sns:Subscribe",
-              "sns:Unsubscribe"
+              "sns:Unsubscribe",
+              "sns:ListTopics",
+              "sns:GetTopicAttributes",
+              "sns:SetTopicAttributes"
             ],
             "Resource": "*"
           }
