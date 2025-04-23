@@ -3,7 +3,7 @@ kind: DeploymentRuntimeConfig
 metadata:
   name: irsa-runtimeconfig
   annotations:
-    argocd.argoproj.io/sync-wave: "-1"
+    argocd.argoproj.io/sync-wave: "2"
     argocd.argoproj.io/hook: PostSync
 spec:
   serviceAccountTemplate:
@@ -17,7 +17,7 @@ kind: Provider
 metadata:
   name: provider-aws-s3
   annotations:
-    argocd.argoproj.io/sync-wave: "-2"
+    argocd.argoproj.io/sync-wave: "2"
     argocd.argoproj.io/hook: PostSync
 spec:
   package: xpkg.upbound.io/upbound/provider-aws-s3:v0.37.0
@@ -29,7 +29,7 @@ kind: ProviderConfig
 metadata:
   name: irsa-providerconfig
   annotations:
-    argocd.argoproj.io/sync-wave: "-3"
+    argocd.argoproj.io/sync-wave: "3"
     argocd.argoproj.io/hook: PostSync
 spec:
   credentials:
