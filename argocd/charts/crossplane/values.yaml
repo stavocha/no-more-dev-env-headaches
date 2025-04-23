@@ -21,7 +21,7 @@ crossplane:
     create: true
     name: provider-aws
     annotations:
-      eks.amazonaws.com/role-arn: arn:aws:iam::622346257358:role/my-custom-role
+      eks.amazonaws.com/role-arn: arn:aws:iam::303051479108:role/crossplane-aws-role
 aws:
   region: us-east-1 
-  roleArn: arn:aws:iam::622346257358:role/my-custom-role
+  aws.roleArn: arn:aws:iam::303051479108:role/crossplane-aws-role
