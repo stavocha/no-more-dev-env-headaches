@@ -1,0 +1,73 @@
+apiVersion: iam.aws.upbound.io/v1beta1
+kind: Role
+metadata:
+  name: subscribers-app-role
+  annotations:
+    crossplane.io/external-name: subscribers-app-role
+spec:
+  forProvider:
+    assumeRolePolicy: |
+      {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "pods.eks.amazonaws.com"
+            },
+            "Action": [
+              "sts:AssumeRole",
+              "sts:TagSession"
+            ]
+          }
+        ]
+      }
+    description: "Role for subscribers-app to access SQS and SNS using AWS Pod Identity"
+    tags:
+      Name: subscribers-app-role
+---
+apiVersion: iam.aws.upbound.io/v1beta1
+kind: RolePolicy
+metadata:
+  name: subscribers-app-policy
+  annotations:
+    crossplane.io/external-name: subscribers-app-policy
+spec:
+  forProvider:
+    policy: |
+      {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": [
+              "sqs:SendMessage",
+              "sqs:ReceiveMessage",
+              "sqs:DeleteMessage",
+              "sqs:GetQueueAttributes"
+            ],
+            "Resource": "*"
+          },
+          {
+            "Effect": "Allow",
+            "Action": [
+              "sns:Publish",
+              "sns:Subscribe",
+              "sns:Unsubscribe"
+            ],
+            "Resource": "*"
+          }
+        ]
+      }
+    role: subscribers-app-role
+---
+apiVersion: eks.aws.upbound.io/v1beta1
+kind: PodIdentityAssociation
+metadata:
+  name: subscribers-app-pod-identity
+spec:
+  forProvider:
+    clusterName: dev1-eks-cluster
+    namespace: subscribers-app
+    serviceAccount: subscribers-app
+    roleArn: arn:aws:iam::303051479108:role/subscribers-app-role
