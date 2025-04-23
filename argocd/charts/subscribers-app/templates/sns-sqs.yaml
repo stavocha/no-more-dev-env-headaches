@@ -14,7 +14,7 @@ spec:
     visibilityTimeoutSeconds: 30
   writeConnectionSecretToRef:
     name: sqs-queue-connection
-    namespace: crossplane-system
+    namespace: subscribers-app
   providerConfigRef:
     name: irsa-providerconfig
 ---
@@ -31,7 +31,7 @@ spec:
     name: irsa-providerconfig
   writeConnectionSecretToRef:
     name: sns-topic-connection
-    namespace: crossplane-system
+    namespace: subscribers-app
 ---
 apiVersion: sns.aws.upbound.io/v1beta1
 kind: TopicSubscription
