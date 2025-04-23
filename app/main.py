@@ -9,8 +9,14 @@ load_dotenv()
 app = Flask(__name__)
 
 # AWS Configuration - Using IRSA (no credentials needed)
-sqs = boto3.client('sqs', region_name=os.getenv('AWS_REGION'))
-sns = boto3.client('sns', region_name=os.getenv('AWS_REGION'))
+AWS_REGION = os.getenv('AWS_REGION', 'us-east-1')  # Default to us-east-1 if not set
+try:
+    sqs = boto3.client('sqs', region_name=AWS_REGION)
+    sns = boto3.client('sns', region_name=AWS_REGION)
+except Exception as e:
+    print(f"Error initializing AWS clients: {e}")
+    sqs = None
+    sns = None
 
 # Get queue URLs from environment variables
 SQS_QUEUE_URL = os.getenv('SQS_QUEUE_URL')
