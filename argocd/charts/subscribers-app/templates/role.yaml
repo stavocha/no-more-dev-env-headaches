@@ -71,3 +71,4 @@ spec:
     namespace: subscribers-app
     serviceAccount: subscribers-app
     roleArn: arn:aws:iam::303051479108:role/subscribers-app-role
+    region: us-east-1 
