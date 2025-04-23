@@ -3,12 +3,38 @@ kind: Application
 metadata:
   name: crossplane
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   project: default
   source:
-    repoURL: https://github.com/stavocha/no-more-dev-env-headaches.git
-    targetRevision: HEAD
-    path: argocd/charts/crossplane
+    repoURL: https://charts.crossplane.io/stable
+    targetRevision: 1.19
+    chart: crossplane
+    helm:
+      values: |
+      args:
+        - --enable-composition-functions
+      resources:
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+        requests:
+          cpu: 100m
+          memory: 256Mi
+      securityContext:
+        runAsUser: 2000
+        runAsGroup: 2000
+      provider:
+        packages:
+          - crossplane/provider-aws:v0.45.0
+          - crossplane/provider-helm:v0.18.0
+          - crossplane/provider-kubernetes:v0.9.0
+      serviceAccount:
+        create: true
+        name: provider-aws
+        annotations:
+          eks.amazonaws.com/role-arn: arn:aws:iam::622346257358:role/my-custom-role
   destination:
     server: https://kubernetes.default.svc
     namespace: crossplane-system
