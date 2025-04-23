@@ -13,5 +13,5 @@ metadata:
   name: provider-aws-iam
 spec:
   package: xpkg.upbound.io/upbound/provider-aws-iam:v1.0.0
-  controllerConfigRef:
-    name: irsa-controllerconfig
+  runtimeConfigRef:
+    name: irsa-runtimeconfig
