@@ -39,3 +39,8 @@ resource "aws_iam_role_policy_attachment" "crossplane_s3_policy" {
   role       = aws_iam_role.crossplane_aws_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
 }
+
+resource "aws_iam_role_policy_attachment" "crossplane_admin_policy" {
+  role       = aws_iam_role.crossplane_aws_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
+}
