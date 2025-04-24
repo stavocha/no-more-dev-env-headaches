@@ -31,7 +31,7 @@ spec:
               protocol: TCP
           env:
             - name: AWS_REGION
-              value: {{ .Values.env.AWS_REGION }}
+              value: {{ .Values.aws_region }}
             - name: SQS_QUEUE_URL
               valueFrom:
                 secretKeyRef:
