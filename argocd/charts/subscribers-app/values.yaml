@@ -3,7 +3,7 @@ aws_account_id: '303051479108'
 replicaCount: 1
 
 image:
-  repository: ghcr.io/stavocha/no-more-dev-env-headaches/myapp
+  repository: ghcr.io/stavocha/no-more-dev-env-headaches/subscribers
   tag: latest
   pullPolicy: Always
 
