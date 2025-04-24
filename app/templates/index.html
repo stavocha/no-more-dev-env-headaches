@@ -72,7 +72,7 @@
                 
                 const result = await response.json();
                 if (result.status === 'success') {
-                    alert('Form submitted successfully!');
+                    alert(result.message);
                     e.target.reset();
                     fetchSubscribers(); // Refresh subscribers after submission
                 } else {
