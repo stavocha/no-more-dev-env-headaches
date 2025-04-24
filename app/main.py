@@ -92,8 +92,15 @@ def submit_form():
                 'email': email
             })
             logger.info(f"Added subscriber to local storage. Total subscribers: {len(first_three_subscribers)}")
-
-        return jsonify({'status': 'success', 'message': 'Form submitted successfully'})
+            return jsonify({
+                'status': 'success', 
+                'message': 'Congratulations! You are one of the first three subscribers and have won a special gift!'
+            })
+        else:
+            return jsonify({
+                'status': 'success', 
+                'message': 'Thank you for subscribing! Unfortunately, you were not among the first three subscribers to receive a gift.'
+            })
     except Exception as e:
         logger.error(f"Error processing form submission: {e}")
         return jsonify({'status': 'error', 'message': str(e)}), 500
