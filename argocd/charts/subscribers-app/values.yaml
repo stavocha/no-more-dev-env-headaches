@@ -1,3 +1,5 @@
+aws_region: us-east-1
+aws_account_id: 303051479108
 replicaCount: 1
 
 image:
@@ -7,10 +9,6 @@ image:
 
 serviceAccount:
   name: subscribers-app
-
-
-env:
-  AWS_REGION: us-east-1
 
 service:
   type: ClusterIP
