@@ -63,7 +63,7 @@ resource "kubectl_manifest" "argocd_app_of_apps" {
       apiVersion: argoproj.io/v1alpha1
       kind: Application
       metadata:
-        name: app-of-cluster
+        name: app-of-apps
         namespace: ${var.argocd_namespace}
       spec:
         project: default

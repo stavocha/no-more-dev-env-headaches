@@ -6,7 +6,7 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
   annotations:
-    argocd.argoproj.io/sync-wave: "4"
+    argocd.argoproj.io/sync-wave: "5"
 spec:
   project: default
   source:
@@ -16,6 +16,7 @@ spec:
     helm:
       valueFiles:
         - values.yaml
+        # - values-files/developer/values-daisy.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: subscribers-app

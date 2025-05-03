@@ -1,31 +1,40 @@
-# Use Python 3.9 slim image as base
-FROM python:3.9-slim
+# Build stage
+FROM python:3.9-alpine as builder
 
-# Set working directory
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
+# Install only the build dependencies we need
+RUN apk add --no-cache gcc musl-dev python3-dev
 
-# Copy requirements first to leverage Docker cache
+# Create and activate virtual environment
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Install dependencies
 COPY requirements.txt .
-
-# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the application
-COPY . .
+# Final stage
+FROM python:3.9-alpine
+
+WORKDIR /app
+
+# Copy only the virtual environment from builder
+COPY --from=builder /opt/venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Copy only the necessary application files
+COPY main.py .
+COPY templates/ templates/
 
 # Create a non-root user
-RUN useradd -m appuser && chown -R appuser:appuser /app
+RUN adduser -D appuser && chown -R appuser:appuser /app
 USER appuser
 
-# Set Python path to include the current directory
+# Set Python path
 ENV PYTHONPATH=/app
 
-# Expose the port the app runs on
+# Expose the port
 EXPOSE 5000
 
 # Command to run the application
