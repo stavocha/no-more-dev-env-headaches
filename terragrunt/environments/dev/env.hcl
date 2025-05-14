@@ -15,11 +15,10 @@ locals {
   
   # Node Group Configuration
   node_group_name      = "dev1-node-group"
-  node_instance_types  = ["t3a.large", "t3a.xlarge", "m5.large"]
+  node_instance_types  = ["m5.xlarge"]
   node_min_size        = 1
   node_max_size        = 1
   node_desired_size    = 1
   node_disk_size       = 10
   
 } 
-
