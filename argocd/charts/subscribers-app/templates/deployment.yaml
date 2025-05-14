@@ -37,8 +37,6 @@ spec:
                 secretKeyRef:
                   name: sqs-queue-connection
                   key: url
-            - name: SNS_TOPIC_ARN
-              value: "arn:aws:sns:{{ .Values.aws_region }}:{{ .Values.aws_account_id }}:user-registration-topic"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           livenessProbe:
