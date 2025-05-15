@@ -1,5 +1,6 @@
 aws_region: us-east-1
 replicaCount: 1
+cluster_name: dev1-eks-cluster
 
 image:
   repository: ghcr.io/stavocha/no-more-dev-env-headaches/subscribers
