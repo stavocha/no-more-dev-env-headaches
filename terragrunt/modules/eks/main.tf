@@ -26,7 +26,7 @@ module "eks" {
     default = {
       name           = var.node_group_name
       instance_types = var.node_instance_types
-      capacity_type  = "SPOT"
+      capacity_type  = "ON_DEMAND"
       min_size     = var.node_min_size
       max_size     = var.node_max_size
       desired_size = var.node_desired_size
