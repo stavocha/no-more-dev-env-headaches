@@ -39,11 +39,3 @@ spec:
                   key: url
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http 
